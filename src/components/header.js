@@ -39,11 +39,24 @@ class Header extends React.Component {
     this.handleClickOnTitle = this.handleClickOnTitle.bind(this);
   }
 
+  componentWillMount() {
+    console.log(' componentWillMount');
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
   handleClickOnTitle (e) {
     console.log('Click on title', e.target.innerHTML);
   }
 
   render() {
+    console.log('render');
     return (
       <div >
         <Title click={ this.handleClickOnTitle }/>
@@ -65,13 +78,40 @@ const Footer = () => (
   </div>
 )
 
-const Index = () => (
-  <div>
-    <Header />
-    <Main />
-    <Footer />
-  </div>
-)
+// const Index = () => (
+//   <div>
+//     <Header />
+//     <Main />
+//     <Footer />
+//   </div>
+// )
+
+class Index extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      isShowHeader: true
+    }
+  }
+
+  handleShowOrHide () {
+    this.setState({
+      isShowHeader: !this.state.isShowHeader
+    })
+  }
+
+  render () {
+    return (
+      <div>
+        {this.state.isShowHeader ? <Header /> : null}
+        <button onClick={this.handleShowOrHide.bind(this)}>
+          显示或者隐藏标题
+        </button>
+      </div>
+    )
+  }
+}
+
 
 
 export default Index;

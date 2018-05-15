@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import Comment from './Comment';
 
 class CommentList extends React.Component {
@@ -15,23 +15,13 @@ class CommentList extends React.Component {
         {
           commentList.length ?
           commentList.map((comment, index) => (
-            <Comment
-              comment={comment}
-              key={index}
-              index={index}
-              onDeleteComment={this.props.handleDeleteComment}
-              />
+            <Comment comment={comment} key={index}></Comment>
           ))
           : null
         }
       </div>
     );
   }
-}
-
-CommentList.propTypes = {
-  comments: PropTypes.array,
-  onDeleteComment: PropTypes.func
 }
 
 export default CommentList;

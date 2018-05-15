@@ -13,6 +13,22 @@ class CommentApp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount() {
+    this._loadComponents()
+  }
+
+  _loadComponents() {
+    let comments = localStorage.getItem('comments');
+    if (comments) {
+      comments = JSON.parse(comments);
+      this.setState({ commentList: comments })
+    }
+  }
+
+  _saveComments (comments) {
+    localStorage.setItem('comments', JSON.stringify(comments));
+  }
+
   handleSubmit(comment) {
     if (!comment) return
     if (!comment.username) return alert('请输入用户名')
@@ -22,7 +38,18 @@ class CommentApp extends React.Component {
     this.setState({
       commentList
     })
+    this._saveComments(commentList);
     console.log(comment);
+  }
+
+  handleDeleteComment(index) {
+    console.log(index , '======');
+    const { commentList } = this.state;
+    commentList.splice(index, 1);
+    this.setState({
+      commentList
+    })
+    this._saveComments(commentList)
   }
 
 
@@ -31,8 +58,11 @@ class CommentApp extends React.Component {
     const { commentList } = this.state;
     return (
       [
-        <CommentInput handleSubmit={this.handleSubmit}/>,
-        <CommentList commentList={commentList}/>
+        <CommentInput handleSubmit={this.handleSubmit} key="input"/>,
+        <CommentList
+          key="list"
+          commentList={commentList}
+          handleDeleteComment={this.handleDeleteComment.bind(this)} />
       ]
     )
   }
